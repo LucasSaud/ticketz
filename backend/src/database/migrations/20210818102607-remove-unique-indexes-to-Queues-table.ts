@@ -12,11 +12,11 @@ module.exports = {
 
   down: (queryInterface: QueryInterface) => {
     return Promise.all([
-      queryInterface.addConstraint("Queues", { fields: ["color"],
+      queryInterface.addConstraint("Queues", ["color"], {
         name: "Queues_color_key",
         type: 'unique'
       }),
-      queryInterface.addConstraint("Queues", { fields: ["name"],
+      queryInterface.addConstraint("Queues", ["name"], {
         name: "Queues_name_key",
         type: 'unique'
       }),

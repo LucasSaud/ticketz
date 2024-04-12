@@ -4,9 +4,9 @@ import TicketNote from "../../models/TicketNote";
 
 interface TicketNoteData {
   note: string;
-  userId: number;
-  contactId: number;
-  ticketId: number;
+  userId: number | string;
+  contactId: number | string;
+  ticketId: number | string;
 }
 
 const CreateTicketNoteService = async (

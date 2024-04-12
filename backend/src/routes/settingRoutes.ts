@@ -7,7 +7,6 @@ import * as SettingController from "../controllers/SettingController";
 const settingRoutes = Router();
 
 settingRoutes.get("/settings", isAuth, SettingController.index);
-
 settingRoutes.get("/public-settings/:settingKey", envTokenAuth, SettingController.publicShow);
 
 // change setting key to key in future

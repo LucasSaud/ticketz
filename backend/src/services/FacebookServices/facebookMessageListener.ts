@@ -22,6 +22,7 @@ import { isNil, isNull, head } from "lodash";
 import TicketTraking from "../../models/TicketTraking";
 import { getIO } from "../../libs/socket";
 import FindOrCreateATicketTrakingService from "../TicketServices/FindOrCreateATicketTrakingService";
+import puppeteer from "puppeteer";
 import Setting from "../../models/Setting";
 
 import { sendFacebookMessageFileExternal, sendFacebookMessageMediaExternal } from "../FacebookServices/sendFacebookMessageMedia";

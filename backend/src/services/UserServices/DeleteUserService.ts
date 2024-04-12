@@ -15,6 +15,10 @@ const DeleteUserService = async (
     throw new AppError("ERR_NO_USER_FOUND", 404);
   }
 
+  if (user.super) {
+    throw new AppError("ERR_NO_USER_DELETE");
+  }
+
   const userOpenTickets: Ticket[] = await user.$get("tickets", {
     where: { status: "open" }
   });

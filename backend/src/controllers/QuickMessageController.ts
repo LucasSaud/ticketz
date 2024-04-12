@@ -62,7 +62,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   const record = await CreateService({
     ...data,
     companyId,
-    userId: Number.parseInt(req.user.id, 10)
+    userId: req.user.id
   });
 
   const io = getIO();
@@ -104,8 +104,8 @@ export const update = async (
 
   const record = await UpdateService({
     ...data,
-    userId: Number.parseInt(req.user.id, 10),
-    id: Number.parseInt(id, 10),
+    userId: req.user.id,
+    id,
   });
 
   const io = getIO();

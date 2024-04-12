@@ -50,6 +50,10 @@ import { cacheLayer } from "../../libs/cache";
 import { debounce } from "../../helpers/Debounce";
 import { getMessageOptions } from "./SendWhatsAppMedia";
 
+import * as ffmpeg from "fluent-ffmpeg";
+
+ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
+
 const fs = require('fs')
 
 type Session = WASocket & {
@@ -576,7 +580,27 @@ const verifyMediaMessage = async (
       join(__dirname, "..", "..", "..", "public", media.filename),
       media.data,
       "base64"
-    );
+      )
+      .then(() => {
+        console.log("Arquivo OGG salvo com sucesso!");
+        return new Promise<void>((resolve, reject) => {
+          ffmpeg(`./public/${media.filename}`)
+            .toFormat("mp3")
+            .save(`./public/${media.filename}`.replace(".ogg", ".mp3"))
+            .on("end", () => {
+              resolve();
+            })
+            .on("error", err => {
+              reject(err);
+            });
+        });
+      })
+      .then(() => {
+        console.log("Conversão concluída!");
+      })
+      .catch(err => {
+        console.error("Ocorreu um erro:", err);
+      });
   } catch (err) {
     Sentry.captureException(err);
     logger.error(err);
@@ -588,7 +612,7 @@ const verifyMediaMessage = async (
     id: msg.key.id,
     ticketId: ticket.id,
     contactId: msg.key.fromMe ? undefined : contact.id,
-    body: body ? body : media.filename,
+    body: body ? body : '',
     fromMe: msg.key.fromMe,
     read: msg.key.fromMe,
     mediaUrl: media.filename,
@@ -601,7 +625,7 @@ const verifyMediaMessage = async (
   };
 
   await ticket.update({
-    lastMessage: body || media.filename,
+    lastMessage: body 
   });
 
   const newMessage = await CreateMessageService({
@@ -871,9 +895,7 @@ const verifyQueue = async (
     ticket.companyId
   )
 
-
-
-  if (queues.length === 1) {
+  if (queues.length === 0) {
     const firstQueue = head(queues);
     let chatbot = false;
     if (firstQueue?.options) {

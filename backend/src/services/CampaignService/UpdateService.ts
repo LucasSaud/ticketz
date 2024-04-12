@@ -4,11 +4,11 @@ import ContactList from "../../models/ContactList";
 import Whatsapp from "../../models/Whatsapp";
 
 interface Data {
-  id: number;
+  id: number | string;
   name: string;
   status: string;
   confirmation: boolean;
-  scheduledAt: Date;
+  scheduledAt: string;
   companyId: number;
   contactListId: number;
   message1?: string;
@@ -41,6 +41,7 @@ const UpdateService = async (data: Data): Promise<Campaign> => {
 
   if (
     data.scheduledAt != null &&
+    data.scheduledAt != "" &&
     data.status === "INATIVA"
   ) {
     data.status = "PROGRAMADA";

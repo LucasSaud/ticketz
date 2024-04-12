@@ -8,7 +8,7 @@ interface TagData {
   id?: number;
   name?: string;
   color?: string;
-  kanban?: number;
+  kanban?: string;
 }
 
 interface Request {

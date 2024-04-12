@@ -10,12 +10,18 @@ import Tab from "@material-ui/core/Tab";
 import Badge from "@material-ui/core/Badge";
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import { Grid } from "@material-ui/core"; 
+import GroupIcon from "@material-ui/icons/Group";
+
+import Divider from "@material-ui/core/Divider";
+import ListSubheader from "@material-ui/core/ListSubheader";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
 import NewTicketModal from "../NewTicketModal";
 import TicketsList from "../TicketsListCustom";
+import TicketsListGroup from "../TicketsListGroup";
 import TabPanel from "../TabPanel";
 
 import { i18n } from "../../translate/i18n";
@@ -201,6 +207,12 @@ const TicketsManagerTabs = () => {
             label={i18n.t("tickets.tabs.open.title")}
             classes={{ root: classes.tab }}
           />
+           <Tab
+            value={"group"}
+            icon={<GroupIcon />}
+            label={i18n.t("tickets.tabs.group.title")}
+            classes={{ root: classes.tab }}
+          />
           <Tab
             value={"closed"}
             icon={<CheckBoxIcon />}
@@ -306,37 +318,108 @@ const TicketsManagerTabs = () => {
             selectedQueueIds={selectedQueueIds}
             updateCount={(val) => setOpenCount(val)}
             style={applyPanelStyle("open")}
-            setTabOpen={setTabOpen}
           />
           <TicketsList
+          chatbot={false}
             status="pending"
             selectedQueueIds={selectedQueueIds}
             updateCount={(val) => setPendingCount(val)}
             style={applyPanelStyle("pending")}
-            setTabOpen={setTabOpen}
           />
         </Paper>
       </TabPanel>
+      <TabPanel value={tab} name="group" className={classes.ticketsWrapper}>
+        <Tabs
+          value={tabOpen}
+          onChange={handleChangeTabOpen}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab
+            label={
+              <Badge
+                className={classes.badge}
+                badgeContent={openCount}
+                color="primary"
+              >
+                {i18n.t("ticketsList.assignedHeader")}
+              </Badge>
+            }
+            value={"open"}
+          />
+          <Tab
+            label={
+              <Badge
+                className={classes.badge}
+                badgeContent={pendingCount}
+                color="secondary"
+              >
+                {i18n.t("ticketsList.pendingHeader")}
+              </Badge>
+            }
+            value={"pending"}
+          />
+        </Tabs>
+        <Paper className={classes.ticketsWrapper}>
+          <TicketsListGroup
+            status="open"
+            showAll={showAllTickets}
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setOpenCount(val)}
+            style={applyPanelStyle("open")}
+          />
+          <TicketsListGroup
+            status="pending"
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setPendingCount(val)}
+            style={applyPanelStyle("pending")}
+
+          />
+        </Paper>
+      </TabPanel>
+      {profile === "admin" && (
       <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
+      <Divider />
+      <ListSubheader inset>
+      {i18n.t("tickets.tabs.private.title")}      
+      </ListSubheader>
         <TicketsList
+          status="closed"
+          showAll={showAllTickets}
+          selectedQueueIds={selectedQueueIds}
+        />
+        <Divider />
+      <ListSubheader inset>
+      {i18n.t("tickets.tabs.group.title")}
+      </ListSubheader>
+        <TicketsListGroup
           status="closed"
           showAll={true}
           selectedQueueIds={selectedQueueIds}
         />
       </TabPanel>
+      )}
       <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
-        <TagsFilter onFiltered={handleSelectedTags} />
-        {profile === "admin" && (
-          <UsersFilter onFiltered={handleSelectedUsers} />
-        )}
-        <TicketsList
-          searchParam={searchParam}
-          showAll={true}
-          tags={selectedTags}
-          users={selectedUsers}
-          selectedQueueIds={selectedQueueIds}
-        />
-      </TabPanel>
+  <Grid container spacing={2} alignItems="baseline"> 
+    <Grid item xs={12} sm={6}> 
+      <TagsFilter onFiltered={handleSelectedTags} />
+    </Grid>
+    {profile === "admin" && (
+      <Grid item xs={12} sm={6}> 
+        <UsersFilter onFiltered={handleSelectedUsers} />
+      </Grid>
+    )}
+  </Grid>
+  
+  <TicketsList
+    searchParam={searchParam}
+    showAll={true}
+    tags={selectedTags}
+    users={selectedUsers}
+    selectedQueueIds={selectedQueueIds}
+  />
+</TabPanel>
     </Paper>
   );
 };

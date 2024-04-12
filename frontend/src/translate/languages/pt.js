@@ -26,6 +26,39 @@ const messages = {
         buttons: {
           submit: "Entrar",
           register: "Não tem um conta? Cadastre-se!",
+          returlogin: "Voltar ao menu principal",
+          send :  "Enviar E-mail",
+        },
+      },
+      resetpswd:{
+        title2: "Redefinir senha",
+        toasts: {
+          success: "Verifique a caixa de entrada de seu email para continuarmos!",
+          resetsucess: "Senha redefinida com sucesso, volte a tela de login para entrar na plataforma!",
+          fail: "Erro ao criar redefinir senha. Verifique o token informado.",
+        },
+      },
+      plans: {
+        form: {
+          name: "Nome",
+          users: "Usuários",
+          connections: "Conexões",
+          queue: "Filas",
+          campaigns: "Campanhas",
+          schedules: "Agendamentos",
+          email: "E-mail",
+          chat: "Chat Interno",
+          api: "Api Externa",
+          kanban: "Kanban",
+          integrations: "Integrações",
+          enabled: "Habilitadas",
+          disabled: "Desabilitadas",
+          clear: "Cancelar",
+          delete: "Excluir",
+          save: "Salvar",
+          yes: "Sim",
+          no: "Não",
+          money: "R$",
         },
       },
       companies: {
@@ -279,6 +312,18 @@ const messages = {
       ticketsQueueSelect: {
         placeholder: "Filas",
       },
+      qrCode: {
+        message: "Leia o QrCode para iniciar a sessão",
+        title: "Utilize o AutoAtende com seu WhatsApp:",
+        firstline: "Abra o WhatsApp no seu celular",
+        secondline: {
+          touch: "Toque em Mais opções no Android",
+         orsetting: "ou em Configurações",
+         iphone: "no iPhone",
+         },
+        thirdline: "Toque em Dispositivos conectados e, em seguida, em Conectar dispositivos",
+        fourthline: "Aponte seu celular para essa tela para capturar o QR Code",
+      },
       tickets: {
         toasts: {
           deleted: "O atendimento que você estava foi deletado.",
@@ -289,7 +334,9 @@ const messages = {
         tabs: {
           open: { title: "Abertas" },
           closed: { title: "Resolvidos" },
+          group: { title: "Grupos" },
           search: { title: "Busca" },
+          private: { title: "Atendimentos finalizados" },
         },
         search: {
           placeholder: "Buscar atendimento e mensagens",
@@ -805,6 +852,7 @@ const messages = {
           "Esta cor já está em uso, escolha outra.",
         ERR_WAPP_GREETING_REQUIRED:
           "A mensagem de saudação é obrigatório quando há mais de uma fila.",
+        ERR_NO_USER_DELETE: "Não é possível excluir usuário Super",
       },
     },
   },

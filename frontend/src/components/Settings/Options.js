@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import Grid from "@material-ui/core/Grid";
+import { i18n } from "../../translate/i18n";
+import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -10,8 +12,7 @@ import useSettings from "../../hooks/useSettings";
 import { toast } from 'react-toastify';
 import { makeStyles } from "@material-ui/core/styles";
 import { grey, blue } from "@material-ui/core/colors";
-import OnlyForSuperUser from "../OnlyForSuperUser";
-import useAuth from "../../hooks/useAuth.js";
+import { Tabs, Tab } from "@material-ui/core";
 
 //import 'react-toastify/dist/ReactToastify.css';
  
@@ -80,27 +81,25 @@ export default function Options(props) {
   const [scheduleType, setScheduleType] = useState("disabled");
   const [callType, setCallType] = useState("enabled");
   const [chatbotType, setChatbotType] = useState("");
-  const [allowSignup, setAllowSignup] = useState("disabled");
   const [CheckMsgIsGroup, setCheckMsgIsGroupType] = useState("enabled");
 
   const [loadingUserRating, setLoadingUserRating] = useState(false);
   const [loadingScheduleType, setLoadingScheduleType] = useState(false);
   const [loadingCallType, setLoadingCallType] = useState(false);
   const [loadingChatbotType, setLoadingChatbotType] = useState(false);
-  const [loadingAllowSignup, setLoadingAllowSignup] = useState(false);
   const [loadingCheckMsgIsGroup, setCheckMsgIsGroup] = useState(false);
-  const { getCurrentUserInfo } = useAuth();
-  const [currentUser, setCurrentUser] = useState({});
 
+  const [smtpauthType, setUrlSmtpauthType] = useState("");
+  const [loadingUrlSmtpauthType, setLoadingUrlSmtpauthType] = useState(false);
+  const [usersmtpauthType, setUserSmtpauthType] = useState("");
+  const [loadingSmtpauthType, setLoadingSmptauthType] = useState(false);
+  const [clientsecretsmtpauthType, setClientSecrectSmtpauthType] = useState("");
+  const [loadingClientSecrectSmtpauthType, setLoadingClientSecrectSmtpauthType] = useState(false);
+  const [smtpPortType, setSmtpPortType] = useState("");
+  const [loadingSmtpPortType, setLoadingSmtpPortType] = useState(false)  
   const { update } = useSettings();
 
   useEffect(() => {
-    getCurrentUserInfo().then(
-      (u) => {
-        setCurrentUser(u);
-      }
-    );
-    
     if (Array.isArray(settings) && settings.length) {
       const userRating = settings.find((s) => s.key === "userRating");
       if (userRating) {
@@ -122,9 +121,24 @@ export default function Options(props) {
       if (chatbotType) {
         setChatbotType(chatbotType.value);
       }
-      const allowSignup = settings.find((s) => s.key === "allowSignup");
-      if (allowSignup) {
-        setAllowSignup(allowSignup.value);
+      const smtpauthType = settings.find((s) => s.key === "smtpauth");
+      if (smtpauthType) {
+        setUrlSmtpauthType(smtpauthType.value);
+      }
+
+      const usersmtpauthType = settings.find((s) => s.key === "usersmtpauth");
+      if (usersmtpauthType) {
+        setUserSmtpauthType(usersmtpauthType.value);
+      }
+
+      const clientsecretsmtpauthType = settings.find((s) => s.key === "clientsecretsmtpauth");
+      if (clientsecretsmtpauthType) {
+        setClientSecrectSmtpauthType(clientsecretsmtpauthType.value);
+      }
+
+      const smtpPortType = settings.find((s) => s.key === "smtpport");
+      if (smtpPortType) {
+        setSmtpPortType(smtpPortType.value);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,17 +200,6 @@ export default function Options(props) {
     setLoadingChatbotType(false);
   }
 
-  async function handleAllowSignup(value) {
-    setAllowSignup(value);
-    setLoadingAllowSignup(true);
-    await update({
-      key: "allowSignup",
-      value,
-    });
-    toast.success("Operação atualizada com sucesso.");
-    setLoadingAllowSignup(false);
-  }
-
   async function handleGroupType(value) {
     setCheckMsgIsGroupType(value);
     setCheckMsgIsGroup(true);
@@ -211,6 +214,49 @@ export default function Options(props) {
         } */
   }
 
+  async function handleChangeUrlSmtpauth(value) {
+    setUrlSmtpauthType(value);
+    setLoadingUrlSmtpauthType(true);
+    await update({
+      key: "smtpauth",
+      value,
+    });
+    toast.success("Operação atualizada com sucesso.");
+    setLoadingUrlSmtpauthType(false);
+  }
+
+  async function handleChangeUserSmptauth(value) {
+    setUserSmtpauthType(value);
+    setLoadingSmptauthType(true);
+    await update({
+      key: "usersmtpauth",
+      value,
+    });
+    toast.success("Operação atualizada com sucesso.");
+    setLoadingSmptauthType(false);
+  }
+
+  async function handleChangeClientSecrectSmtpauth(value) {
+    setClientSecrectSmtpauthType(value);
+    setLoadingClientSecrectSmtpauthType(true);
+    await update({
+      key: "clientsecretsmtpauth",
+      value,
+    });
+    toast.success("Operação atualizada com sucesso.");
+    setLoadingClientSecrectSmtpauthType(false);
+  }
+
+  async function handleChangeSmtpPort(value) {
+    setSmtpPortType(value);
+    setLoadingSmtpPortType(true);
+    await update({
+      key: "smtpport",
+      value,
+    });
+    toast.success("Operação atualizada com sucesso.");
+    setLoadingSmtpPortType(false);
+  }
   return (
     <>
       <Grid spacing={3} container>
@@ -315,31 +361,117 @@ export default function Options(props) {
             </FormHelperText>
           </FormControl>
         </Grid>
-        <OnlyForSuperUser
-          user={currentUser}
-          yes={() => (
-            <Grid xs={12} sm={6} md={4} item>
-              <FormControl className={classes.selectContainer}>
-                <InputLabel id="group-type-label">
-                  Permitir cadastro
-                </InputLabel>
-                <Select
-                  labelId="allow-signup"
-                  value={allowSignup}
-                  onChange={async (e) => {
-                    handleAllowSignup(e.target.value);
-                  }}
-                >
-                  <MenuItem value={"disabled"}>Desativado</MenuItem>
-                  <MenuItem value={"enabled"}>Ativado</MenuItem>
-                </Select>
-                <FormHelperText>
-                  {loadingAllowSignup && "Atualizando..."}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-          )}
-         />
+      </Grid>
+
+
+      <Grid spacing={3} container>
+        <Tabs
+          indicatorColor="primary"
+          textColor="primary"
+          scrollButtons="on"
+          variant="scrollable"
+          className={classes.tab}
+          style={{
+            marginBottom: 20,
+            marginTop: 20
+          }}
+        >
+          <Tab
+
+            label={i18n.t("optionsPage.integra")} />
+
+        </Tabs>
+
+      </Grid>
+      {/*-----------------SMTP-AUTH-----------------*/}
+      <Grid spacing={3} container
+        style={{ marginBottom: 10 }}>
+        <Tabs
+          indicatorColor="primary"
+          textColor="primary"
+          scrollButtons="on"
+          variant="scrollable"
+          className={classes.tab}
+        >
+          <Tab label="SMTP" />
+
+        </Tabs>
+        <Grid xs={12} sm={12} md={3} item>
+          <FormControl className={classes.selectContainer}>
+            <TextField
+              id="smtpauth"
+              name="smtpauth"
+              margin="dense"
+              label="Url SMTP"
+              variant="outlined"
+              value={smtpauthType}
+              onChange={async (e) => {
+                handleChangeUrlSmtpauth(e.target.value);
+              }}
+            >
+            </TextField>
+            <FormHelperText>
+              {loadingUrlSmtpauthType && "Atualizando..."}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid xs={12} sm={12} md={3} item>
+          <FormControl className={classes.selectContainer}>
+            <TextField
+              id="usersmtpauth"
+              name="usersmtpauth"
+              margin="dense"
+              label="User SMTP"
+              variant="outlined"
+              value={usersmtpauthType}
+              onChange={async (e) => {
+                handleChangeUserSmptauth(e.target.value);
+              }}
+            >
+            </TextField>
+            <FormHelperText>
+              {loadingSmtpauthType && "Atualizando..."}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid xs={12} sm={12} md={3} item>
+          <FormControl className={classes.selectContainer}>
+            <TextField
+              id="clientsecretsmtpauth"
+              name="clientsecretsmtpauth"
+              margin="dense"
+              label="Password SMTP"
+              variant="outlined"
+              value={clientsecretsmtpauthType}
+              onChange={async (e) => {
+                handleChangeClientSecrectSmtpauth(e.target.value);
+              }}
+            >
+            </TextField>
+            <FormHelperText>
+              {loadingClientSecrectSmtpauthType && "Atualizando..."}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid xs={12} sm={12} md={3} item>
+          <FormControl className={classes.selectContainer}>
+            <TextField
+              id="smtpport"
+              name="smtpport"
+              margin="dense"
+              label="Porta SMTP"
+              variant="outlined"
+              value={smtpPortType}
+              onChange={async (e) => {
+                handleChangeSmtpPort(e.target.value);
+              }}
+            >
+            </TextField>
+            <FormHelperText>
+              {loadingSmtpPortType && "Atualizando..."}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
       </Grid>
     </>
   );

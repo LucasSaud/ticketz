@@ -28,7 +28,7 @@ type StoreData = {
   name: string;
   status: string;
   confirmation: boolean;
-  scheduledAt: Date;
+  scheduledAt: string;
   companyId: number;
   contactListId: number;
 };
@@ -107,7 +107,7 @@ export const update = async (
 
   const record = await UpdateService({
     ...data,
-    id: parseInt(id, 10)
+    id
   });
 
   const io = getIO();

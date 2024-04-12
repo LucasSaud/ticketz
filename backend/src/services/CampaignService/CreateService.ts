@@ -8,7 +8,7 @@ interface Data {
   name: string;
   status: string;
   confirmation: boolean;
-  scheduledAt: Date;
+  scheduledAt: string;
   companyId: number;
   contactListId: number;
   message1?: string;
@@ -38,7 +38,7 @@ const CreateService = async (data: Data): Promise<Campaign> => {
     throw new AppError(err.message);
   }
 
-  if (data.scheduledAt != null) {
+  if (data.scheduledAt != null && data.scheduledAt != "") {
     data.status = "PROGRAMADA";
   }
 

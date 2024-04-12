@@ -7,8 +7,4 @@ module.exports = {
     ]);
   },
 
-  down: (_) => {
-    return Promise.resolve();
-  }
-
 };

@@ -19,6 +19,14 @@ export const initIO = (httpServer: Server): SocketIO => {
     }
   });
 
+  if (process.env.DOMAIN) {
+    io.use((socket, next) => {
+      if (socket.handshake.headers.origin.toString().toLocaleLowerCase().indexOf(process.env.DOMAIN) >= 0) {
+        return next();
+      }
+    });
+  }
+
   if (process.env.SOCKET_ADMIN && JSON.parse(process.env.SOCKET_ADMIN)) {
     User.findByPk(1).then(
       (adminUser) => {

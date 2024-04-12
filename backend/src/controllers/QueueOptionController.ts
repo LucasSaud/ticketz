@@ -13,29 +13,15 @@ import AppError from "../errors/AppError";
 import QueueOption from "../models/QueueOption";
 
 type FilterList = {
-  queueId: string;
-  queueOptionId: string;
-  parentId: string;
+  queueId: string | number;
+  queueOptionId: string | number;
+  parentId: string | number | boolean;
 };
 
 export const index = async (req: Request, res: Response): Promise<Response> => {
   const { queueId, queueOptionId, parentId } = req.query as FilterList;
 
-  // Convert the strings to numbers
-  const convertedQueueId: number = parseInt(queueId, 10);
-  const convertedQueueOptionId = parseInt(queueOptionId, 10);
-  const convertedParentId = parseInt(parentId, 10);
-  
-  // Check if conversion fails
-  if (Number.isNaN(convertedQueueId) || Number.isNaN(convertedQueueOptionId) || Number.isNaN(convertedParentId)) {
-    throw new AppError("Invalid query parameters. queueId, queueOptionId, and parentId must be numbers.", 400);
-  }
-
-  const queueOptions = await ListService({ 
-    queueId: convertedQueueId,
-    queueOptionId: convertedQueueOptionId,
-    parentId: convertedParentId 
-  });
+  const queueOptions = await ListService({ queueId, queueOptionId, parentId });
 
   return res.json(queueOptions);
 };

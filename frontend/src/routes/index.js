@@ -19,7 +19,7 @@ import Helps from "../pages/Helps/";
 import About from "../pages/About/";
 import ContactLists from "../pages/ContactLists/";
 import ContactListItems from "../pages/ContactListItems/";
-// import Companies from "../pages/Companies/";
+import Companies from "../pages/Companies/";
 import QuickMessages from "../pages/QuickMessages/";
 import { AuthProvider } from "../context/Auth/AuthContext";
 import { TicketsContextProvider } from "../context/Tickets/TicketsContext";
@@ -36,6 +36,8 @@ import Subscription from "../pages/Subscription/";
 
 import Kanban from "../pages/Kanban";
 import TagsKanban from "../pages/TagsKanban";
+
+import ForgetPassword from "../pages/ForgetPassWord/";
 
 const Routes = () => {
   const [showCampaigns, setShowCampaigns] = useState(false);
@@ -54,6 +56,7 @@ const Routes = () => {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/forgetpsw"    component={ForgetPassword} />
             {/* <Route exact path="/create-company" component={Companies} /> */}
             <WhatsAppsProvider>
               <LoggedInLayout>

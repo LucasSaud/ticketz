@@ -277,6 +277,18 @@ const messages = {
       ticketsQueueSelect: {
         placeholder: "Colas",
       },
+      qrCode: {
+        message: "Leia o QrCode para iniciar a sessão",
+        title: "Utilize o AutoAtende com seu WhatsApp:",
+        firstline: "Abra o WhatsApp no seu celular",
+        secondline: {
+          touch: "Toque em Mais opções no Android",
+         orsetting: "ou em Configurações",
+         iphone: "no iPhone",
+         },
+        thirdline: "Toque em Dispositivos conectados e, em seguida, em Conectar dispositivos",
+        fourthline: "Aponte seu celular para essa tela para capturar o QR Code",
+      },
       tickets: {
         toasts: {
           deleted: "La atención que estabas siguiendo fue eliminada.",
@@ -287,7 +299,9 @@ const messages = {
         tabs: {
           open: { title: "Abiertas" },
           closed: { title: "Resueltos" },
+          group: { title: "Grupos" },
           search: { title: "Búsqueda" },
+          private: { title: "Servicios completados" },
         },
         search: {
           placeholder: "Buscar atención y mensajes",
@@ -802,6 +816,7 @@ const messages = {
           "Este color ya está en uso, elija otro.",
         ERR_WAPP_GREETING_REQUIRED:
           "El mensaje de saludo es obligatorio cuando hay más de una cola.",
+        ERR_NO_USER_DELETE: "No tiene permisos para eliminar usuario Super",
       },
     },
   },

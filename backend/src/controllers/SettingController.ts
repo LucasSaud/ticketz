@@ -47,7 +47,7 @@ export const update = async (
 
 export const publicShow = async (req: Request, res: Response): Promise<Response> => {
   const { settingKey: key } = req.params;
-  
+
   const settingValue = await GetPublicSettingService({ key });
 
   return res.status(200).json(settingValue);

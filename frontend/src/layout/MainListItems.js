@@ -312,11 +312,6 @@ const MainListItems = (props) => {
               </ListItem>                
             </List>
           </Collapse>
-          {/* <ListItemLink
-            to="/kanban"
-            primary="Kanban"
-            icon={<LoyaltyRoundedIcon />}
-          /> */}
       <ListItemLink
         to="/todolist"
         primary={i18n.t("Tarefas")}
@@ -355,11 +350,6 @@ const MainListItems = (props) => {
               to="/helps"
               primary={i18n.t("mainDrawer.listItems.helps")}
               icon={<HelpOutlineIcon />}
-            />
-            <ListItemLink
-              to="/about"
-              primary={i18n.t("mainDrawer.listItems.about")}
-              icon={<InfoIcon />}
             />
           </>
         </>

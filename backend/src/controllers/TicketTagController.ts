@@ -4,13 +4,7 @@ import TicketTag from '../models/TicketTag';
 import Tag from '../models/Tag'
 
 export const store = async (req: Request, res: Response): Promise<Response> => {
-  const ticketId = parseInt(req.params.ticketId, 10);
-  const tagId = parseInt(req.params.tagId, 10);
-
-  // Check if the parsed values are valid numbers
-  if (Number.isNaN(ticketId) || Number.isNaN(tagId)) {
-    return res.status(400).json({ error: "Invalid ticketId or tagId." });
-  }
+  const { ticketId, tagId } = req.params;
 
   try {
     const ticketTag = await TicketTag.create({ ticketId, tagId });

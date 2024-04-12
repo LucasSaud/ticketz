@@ -7,8 +7,8 @@ import ShowService from "./ShowService";
 interface ScheduleData {
   id?: number;
   body?: string;
-  sendAt?: Date;
-  sentAt?: Date;
+  sendAt?: string;
+  sentAt?: string;
   contactId?: number;
   companyId?: number;
   ticketId?: number;

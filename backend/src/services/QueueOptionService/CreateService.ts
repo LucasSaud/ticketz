@@ -1,11 +1,11 @@
 import QueueOption from "../../models/QueueOption";
 
 interface QueueOptionData {
-  queueId: number;
+  queueId: string;
   title: string;
   option: string;
   message?: string;
-  parentId?: number;
+  parentId?: string;
 }
 
 const CreateService = async (queueOptionData: QueueOptionData): Promise<QueueOption> => {

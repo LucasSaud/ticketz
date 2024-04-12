@@ -272,6 +272,18 @@ const messages = {
 			ticketsQueueSelect: {
 				placeholder: "Queues",
 			},
+			qrCode: {
+				message: "Leia o QrCode para iniciar a sessão",
+				title: "Utilize o AutoAtende com seu WhatsApp:",
+				firstline: "Abra o WhatsApp no seu celular",
+				secondline: {
+				  touch: "Toque em Mais opções no Android",
+				 orsetting: "ou em Configurações",
+				 iphone: "no iPhone",
+				 },
+				thirdline: "Toque em Dispositivos conectados e, em seguida, em Conectar dispositivos",
+				fourthline: "Aponte seu celular para essa tela para capturar o QR Code",
+			  },
 			tickets: {
 				toasts: {
 					deleted: "The ticket you were working on has been deleted.",
@@ -282,7 +294,9 @@ const messages = {
 				tabs: {
 					open: { title: "Open" },
 					closed: { title: "Closed" },
+					group: { title: "Groups" },
 					search: { title: "Search" },
+					private: { title: "Closed tickets" },
 				},
 				search: {
 					placeholder: "Search for ticket and messages",
@@ -787,6 +801,7 @@ const messages = {
 				ERR_FETCH_WAPP_MSG: "Error fetching message from WhatsApp, perhaps it is too old.",
 				ERR_QUEUE_COLOR_ALREADY_EXISTS: "This color is already in use, choose another.",
 				ERR_WAPP_GREETING_REQUIRED: "Greeting message is mandatory when there is more than one queue.",
+				ERR_NO_USER_DELETE: "Could not delete Super User",
 			},
 		},
 	},

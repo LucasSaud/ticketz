@@ -23,10 +23,10 @@ type IndexQuery = {
 };
 
 type StoreData = {
-  priority: number;
+  priority: string;
   title: string;
   text: string;
-  status: boolean;
+  status: string;
   companyId: number;
   mediaPath?: string;
   mediaName?: string;
@@ -103,7 +103,7 @@ export const update = async (
 
   const record = await UpdateService({
     ...data,
-    id: parseInt(id, 10)
+    id
   });
 
   const io = getIO();

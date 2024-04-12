@@ -19,7 +19,7 @@ const useSettings = () => {
         });
         return responseData;
     }
-    
+
     const getPublicSetting = async (key) => {
         const { data } = await openApi.request({
             url: `/public-settings/${key}`,
@@ -29,9 +29,9 @@ const useSettings = () => {
     }
 
     return {
-		  getAll,
-		  getPublicSetting,
-      update
+		getAll,
+	    getPublicSetting,
+        update
     }
 }
 
